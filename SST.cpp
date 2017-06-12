@@ -49,15 +49,7 @@ void SST::get(int& portIdx, enum SstMode& mode, enum SstState& state, int& fromH
     toHour = this->toHour;
     toMinute = this->toMinute;
 }
-/*
-inline enum SstMode SST::getMode() {
-    return this->mode;
-}
 
-inline enum SstMode SST::getState() {
-    return this->state;
-}
-*/
 inline bool SST::isOn(void) {
     return (this->state == ON);
 }
@@ -75,11 +67,11 @@ inline bool SST::isInInactiveMode(void) {
 }
 
 inline bool SST::isInActivePeriod(void) {
-    int currentHour = hour();
-    int currentMinute = minute();
+    int current = hour() * 60 + minute();
+    int from = this->fromHour * 60 + this->fromMinute;
+    int to = this->toHour * 60 + this->toMinute;
 
-    return( this->fromHour <= currentHour && this->fromMinute <= currentMinute &&
-            currentHour <= this->toHour && currentMinute <= this->toMinute);
+    return(from <= current && current < to);
 }
 
 inline bool SST::turnOn(void) {
